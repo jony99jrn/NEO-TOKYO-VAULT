@@ -1,0 +1,62 @@
+{
+  "entities": {
+    "Product": {
+      "title": "Anime Figure",
+      "description": "Collection of premium anime action figures and collectibles.",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string", "description": "Name of the figure/character" },
+        "series": { "type": "string", "description": "Anime series name" },
+        "brand": { "type": "string", "description": "Manufacturer brand" },
+        "price": { "type": "number", "description": "Price in USD" },
+        "images": { "type": "array", "description": "List of product image URLs" },
+        "isPreOrder": { "type": "boolean", "description": "Release status" },
+        "scale": { "type": "string", "description": "Scale of the figure (e.g., 1/7)" },
+        "material": { "type": "string", "description": "Material used (PVC/ABS)" },
+        "stockCount": { "type": "integer", "description": "Remaining units available" },
+        "description": { "type": "string", "description": "Detailed product description" },
+        "releaseDate": { "type": "string", "format": "date", "description": "Expected shipping date" }
+      },
+      "required": ["name", "series", "price", "brand"]
+    },
+    "Order": {
+      "title": "Customer Order",
+      "description": "Information about a purchase transaction.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "description": "Reference to the customer" },
+        "items": { "type": "array", "description": "List of product references and quantities" },
+        "totalAmount": { "type": "number" },
+        "status": { "type": "string", "enum": ["pending", "paid", "shipped", "delivered"] },
+        "stripeSessionId": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "items", "totalAmount"]
+    },
+    "User": {
+      "title": "Collector Profile",
+      "description": "User account information and preferences.",
+      "type": "object",
+      "properties": {
+        "email": { "type": "string" },
+        "displayName": { "type": "string" },
+        "wishlist": { "type": "array", "description": "List of product IDs" },
+        "joinDate": { "type": "string", "format": "date-time" }
+      }
+    }
+  },
+  "firestore": {
+    "/products": {
+      "schema": "Product",
+      "description": "Catalog of all figures available in the vault."
+    },
+    "/orders": {
+      "schema": "Order",
+      "description": "History of user purchases."
+    },
+    "/users": {
+      "schema": "User",
+      "description": "Secure user profiles and collector data."
+    }
+  }
+}
